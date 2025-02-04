@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
 	Card,
 	CardContent,
-	CardMedia,
 	Typography,
 	Container,
 	TextField,
@@ -71,17 +70,21 @@ const Home: React.FC = () => {
     }
 
 	return (
-		<Container sx={{ mb: "70px" }}>
-			<Typography variant="h3" component="h1" gutterBottom>
-				Pokemon List
+		<Container sx={{ my: "70px" }}>
+			<Typography variant="h3" component="h1" gutterBottom align="center">
+				Find your favorite Pokemon here!
 			</Typography>
-			<TextField
-				label="Search Pokemon"
-				variant="outlined"
-				fullWidth
-				margin="normal"
-				onChange={handleSearch}
-			/>
+			<Grid container justifyContent="center">
+				<Grid size={{ xs: 12, md: 6 }}>
+					<TextField
+						label="Search Pokemon"
+						variant="outlined"
+						fullWidth
+						margin="normal"
+						onChange={handleSearch}
+					/>
+				</Grid>
+			</Grid>
 			<Grid container spacing={3}>
 				{filteredPokemons.map((pokemon, index) => {
 					const pokemonId = (page - 1) * 20 + index + 1;
@@ -108,8 +111,8 @@ const Home: React.FC = () => {
                                         backgroundColor: "#f5f5f5",
 									}}>
 									<CardContent>
-										<Typography variant="h6" align="center" sx={{ fontWeight: "800", color: "#333" }}>
-											{pokemon.name.toUpperCase()}
+										<Typography variant="h6" align="center">
+											{pokemon.name.toLowerCase()}
 										</Typography>
 									</CardContent>
 								</Card>
