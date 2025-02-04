@@ -14,12 +14,15 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import styled from "@mui/material/styles/styled";
+import { Source } from "@mui/icons-material";
 
 // Interface for Pokémon details
 interface PokemonDetail {
 	name: string;
 	sprites: {
+		back_default: string;
 		front_default: string;
+		front_shiny: string;
 	};
 	abilities: {
 		ability: {
@@ -59,10 +62,52 @@ const CustomBox = styled(Box)(({ theme }) => ({
 const convertToMeter = (decimeter: number) => decimeter / 10;
 const convertToKg = (hectogram: number) => hectogram / 10;
 
+const onMouseEnter = (source: string) => {
+	const image = document.getElementById(`main-image`) as HTMLImageElement;
+	if (image) {
+		image.src = source;
+	}
+};
+
 // Component to display Pokémon image
-const PokemonImage = ({ image, name }: { image: string; name: string }) => (
+const PokemonImage = ({
+	image,
+	imageBack,
+	imageShiny,
+	name,
+}: {
+	image: string;
+	imageBack: string;
+	imageShiny: string;
+	name: string;
+}) => (
 	<CustomCard sx={{ height: "100%" }}>
-		<img src={image} alt={name} style={{ width: "100%", height: "auto" }} />
+		<img
+			id="main-image"
+			src={image}
+			alt={name}
+			style={{ width: "100%", height: "auto" }}
+		/>
+		<Box display="flex" justifyContent="space-between" sx={{ mt: "-100px" }}>
+			<img
+				src={image}
+				alt={name}
+				style={{ width: "30%", height: "auto" }}
+				onMouseEnter={() => onMouseEnter(image)}
+			/>
+			<img
+				src={imageBack}
+				alt={name}
+				style={{ width: "30%", height: "auto" }}
+				onMouseEnter={() => onMouseEnter(imageBack)}
+			/>
+			<img
+				src={imageShiny}
+				alt={name}
+				style={{ width: "30%", height: "auto" }}
+				onMouseEnter={() => onMouseEnter(imageShiny)}
+			/>
+		</Box>
 	</CustomCard>
 );
 
@@ -187,6 +232,8 @@ const PokemonDetail = () => {
 					<Grid size={{ xs: 12, md: 4 }}>
 						<PokemonImage
 							image={pokemon.sprites.front_default}
+							imageBack={pokemon.sprites.back_default}
+							imageShiny={pokemon.sprites.front_shiny}
 							name={pokemon.name}
 						/>
 					</Grid>
