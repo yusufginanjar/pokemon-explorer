@@ -60,14 +60,24 @@ const Home: React.FC = () => {
 		const target = document.getElementById(
 			`pokemon-${pokemonId}`
 		) as HTMLImageElement;
-		target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemonId}.png`;
+		const shinyTarget = document.getElementById(
+			`pokemon-shiny-${pokemonId}`
+		) as HTMLImageElement;
+
+		target.style.display = "none";
+		shinyTarget.style.display = "block";
 	};
 
 	const handleOnMouseLeave = (pokemonId: string) => () => {
 		const target = document.getElementById(
 			`pokemon-${pokemonId}`
 		) as HTMLImageElement;
-		target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+		const shinyTarget = document.getElementById(
+			`pokemon-shiny-${pokemonId}`
+		) as HTMLImageElement;
+		
+		target.style.display = "block";
+		shinyTarget.style.display = "none";
 	};
 
 	if (loading) return <p>Loading...</p>;
@@ -102,6 +112,7 @@ const Home: React.FC = () => {
 				{filteredPokemons.map((pokemon) => {
 					const pokemonId = pokemon.url.split("/").slice(-2)[0];
 					const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+					const imageUrlShiny = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemonId}.png`;
 					return (
 						<Grid size={{ xs: 12, sm: 6, md: 3 }} key={pokemon.name}>
 							<Link
@@ -117,6 +128,16 @@ const Home: React.FC = () => {
 										onMouseEnter={handleOnMouseEnter(pokemonId)}
 										onMouseLeave={handleOnMouseLeave(pokemonId)}
 										style={{ width: "100%", height: "auto" }}
+									/>
+									<Image
+										id={`pokemon-shiny-${pokemonId}`}
+										src={imageUrlShiny}
+										alt={pokemon.name}
+										width={200}
+										height={200}
+										onMouseEnter={handleOnMouseEnter(pokemonId)}
+										onMouseLeave={handleOnMouseLeave(pokemonId)}
+										style={{ width: "100%", height: "auto", display: "none" }}
 									/>
 								</Box>
 								<Card

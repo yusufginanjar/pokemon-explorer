@@ -12,8 +12,25 @@ interface PokemonImageProps {
 
 const onMouseEnter = (source: string) => {
 	const image = document.getElementById("main-image") as HTMLImageElement;
-	if (image) {
-		image.src = source;
+	const imageBack = document.getElementById(
+		"main-image-back"
+	) as HTMLImageElement;
+	const imageShiny = document.getElementById(
+		"main-image-shiny"
+	) as HTMLImageElement;
+
+	if (source.includes("back")) {
+		image.style.display = "none";
+		imageBack.style.display = "block";
+		imageShiny.style.display = "none";
+	} else if (source.includes("shiny")) {
+		image.style.display = "none";
+		imageBack.style.display = "none";
+		imageShiny.style.display = "block";
+	} else {
+		image.style.display = "block";
+		imageBack.style.display = "none";
+		imageShiny.style.display = "none";
 	}
 };
 
@@ -32,6 +49,22 @@ export const PokemonImage: React.FC<PokemonImageProps> = ({
 					alt={name}
 					width={400}
 					height={400}
+				/>
+				<Image
+					id="main-image-back"
+					src={imageBack}
+					alt={name}
+					width={400}
+					height={400}
+					style={{ display: "none" }}
+				/>
+				<Image
+					id="main-image-shiny"
+					src={imageShiny}
+					alt={name}
+					width={400}
+					height={400}
+					style={{ display: "none" }}
 				/>
 			</Box>
 		) : (
