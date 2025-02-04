@@ -48,6 +48,7 @@ interface PokemonDetail {
 const CustomCard = styled(Card)(({ theme }) => ({
 	borderRadius: theme.spacing(1),
 	boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+	opacity: 0.9,
 }));
 
 const CustomBox = styled(Box)(({ theme }) => ({
@@ -62,6 +63,11 @@ const CustomBox = styled(Box)(({ theme }) => ({
 // Helper functions for unit conversion
 const convertToMeter = (decimeter: number) => decimeter / 10;
 const convertToKg = (hectogram: number) => hectogram / 10;
+
+const convertSlugToName = (slug: string) => {
+	const words = slug.split("-");
+	return words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+}
 
 const onMouseEnter = (source: string) => {
 	const image = document.getElementById(`main-image`) as HTMLImageElement;
@@ -185,14 +191,14 @@ const PokemonPhysicalDetails = ({
 
 // Component to display Pokémon stats
 const PokemonStats = ({ stats }: { stats: PokemonDetail["stats"] }) => (
-	<Box display="flex" flexDirection="column">
+	<Box display="flex" flexDirection="column" sx={{ p: 2 }}>
 		<Typography variant="h6" gutterBottom align="center" color="primary">
 			Stats
 		</Typography>
 		{stats.map((stat, index) => (
 			<Box key={`stat-${index}`} sx={{ mb: 2 }}>
 				<Box display="flex" justifyContent="space-between">
-					<Typography variant="body1">{stat.stat.name}</Typography>
+					<Typography variant="body1">{convertSlugToName(stat.stat.name)}</Typography>
 					<Typography variant="body1">{stat.base_stat}</Typography>
 				</Box>
 				<LinearProgress

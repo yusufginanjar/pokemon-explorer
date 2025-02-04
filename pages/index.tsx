@@ -73,7 +73,7 @@ const Home: React.FC = () => {
 
 	return (
 		<Container sx={{ my: "70px" }}>
-			<Typography variant="h3" component="h1" gutterBottom align="center">
+			<Typography variant="h3" component="h1" gutterBottom align="center" color="dark">
 				Find your favorite Pokemon here!
 			</Typography>
 			<Grid container justifyContent="center">
