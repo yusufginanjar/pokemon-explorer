@@ -1,40 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Pokémon Explorer
+### Deskripsi Proyek
+Pokémon Explorer adalah aplikasi web yang memungkinkan pengguna untuk menjelajahi daftar Pokémon dan melihat detail lengkap dari setiap Pokémon. Aplikasi ini dibangun menggunakan Next.js sebagai framework utama dan Material-UI (MUI) untuk komponen UI yang modern dan responsif.
 
-## Getting Started
+##### Aplikasi ini terdiri dari dua halaman utama:
+Halaman Home: Menampilkan daftar Pokémon dalam bentuk grid dengan fitur pencarian.
+Halaman Detail Pokémon: Menampilkan detail lengkap dari Pokémon yang dipilih, termasuk gambar, kemampuan, tipe, statistik, tinggi, dan berat.
 
-First, run the development server:
+##### Fitur Utama
+###### Daftar Pokémon:
+Menampilkan daftar Pokémon dalam grid responsif.
+Fitur pencarian untuk memfilter Pokémon berdasarkan nama.
+
+###### Detail Pokémon:
+Menampilkan gambar Pokémon (normal, shiny, dan back).
+Menampilkan kemampuan, tipe, statistik, tinggi, dan berat Pokémon.
+Navigasi ke Pokémon sebelumnya atau berikutnya.
+
+###### Responsive Design:
+Aplikasi dapat diakses dengan baik di berbagai perangkat (desktop, tablet, dan mobile).
+
+### Teknologi yang Digunakan
+##### Framework dan Library
+Next.js
+Material-UI (MUI)
+Axios
+TypeScript
+
+##### Struktur Proyek
+Berikut adalah struktur folder utama dari proyek ini:
+src/
+├── components/
+│   ├── home/              # Komponen untuk halaman Home
+│   └── pokemon/           # Komponen untuk halaman Detail Pokémon
+├── pages/
+│   ├── index.tsx          # Halaman Home
+│   ├── pokemon/
+│   │   └── [id].tsx       # Halaman Detail Pokémon
+├── utils/
+│   ├── api.ts             # Fungsi untuk fetching data dari PokeAPI
+│   └── converters.ts      # Fungsi utilitas untuk konversi unit
+├── interfaces/
+│   └── PokemonDetail.ts   # Tipe data untuk detail Pokémon
+├── styles/
+│   └── globals.css        # Gaya global untuk aplikasi
+
+
+### Pilihan Desain
+##### Modularisasi Komponen:
+Setiap komponen dipisahkan ke dalam file terpisah untuk meningkatkan reusability dan kemudahan pemeliharaan.
+Contoh: PokemonCard, PokemonImage, PokemonStats, dll.
+
+##### TypeScript:
+Digunakan untuk memastikan tipe data yang konsisten dan mengurangi bug yang terkait dengan tipe data.
+
+#####  Responsive Design:
+Menggunakan sistem grid dari Material-UI untuk membuat layout yang responsif.
+Memastikan aplikasi dapat diakses dengan baik di berbagai perangkat.
+
+### Cara Menjalankan Proyek
+Clone repositori ini:
+```bash
+git clone https://github.com/yusufginanjar/pokemon-explorer.git
+```
+Masuk ke folder proyek:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd pokemon-explorer
 ```
+Install dependencies:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+```bash
+npm install
+```
+Jalankan aplikasi:
+```bash
+npm run dev
+```
+Buka aplikasi di: 
+http://localhost:3000
