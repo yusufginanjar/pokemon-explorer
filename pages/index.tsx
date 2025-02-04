@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
 import {
 	Card,
 	CardContent,
@@ -35,6 +36,7 @@ const Home: React.FC = () => {
 				setTotalPages(Math.ceil(res.data.count / 20));
 			} catch (err) {
 				setError("Failed to fetch data");
+				console.error(err); // Log error
 			} finally {
 				setLoading(false);
 			}
@@ -54,6 +56,20 @@ const Home: React.FC = () => {
 		setPage(value);
 	};
 
+	const handleOnMouseEnter = (pokemonId: string) => () => {
+		const target = document.getElementById(
+			`pokemon-${pokemonId}`
+		) as HTMLImageElement;
+		target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemonId}.png`;
+	};
+
+	const handleOnMouseLeave = (pokemonId: string) => () => {
+		const target = document.getElementById(
+			`pokemon-${pokemonId}`
+		) as HTMLImageElement;
+		target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+	};
+
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>{error}</p>;
 
@@ -61,19 +77,14 @@ const Home: React.FC = () => {
 		pokemon.name.toLowerCase().includes(search.toLowerCase())
 	);
 
-    const handleOnMouseEnter = ( pokemonId : string ) => (event: React.MouseEvent<HTMLImageElement>) => {
-        const target = event.target as HTMLImageElement;
-        target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemonId}.png`;
-    }
-
-    const handleOnMouseLeave = ( pokemonId : string ) => (event: React.MouseEvent<HTMLImageElement>) => {
-        const target = event.target as HTMLImageElement;
-        target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
-    }
-
 	return (
 		<Container sx={{ my: "70px" }}>
-			<Typography variant="h3" component="h1" gutterBottom align="center" color="dark">
+			<Typography
+				variant="h3"
+				component="h1"
+				gutterBottom
+				align="center"
+				color="dark">
 				Find your favorite Pokemon here!
 			</Typography>
 			<Grid container justifyContent="center">
@@ -88,29 +99,31 @@ const Home: React.FC = () => {
 				</Grid>
 			</Grid>
 			<Grid container spacing={3}>
-				{filteredPokemons.map((pokemon, index) => {
+				{filteredPokemons.map((pokemon) => {
 					const pokemonId = pokemon.url.split("/").slice(-2)[0];
-					let imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+					const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
 					return (
 						<Grid size={{ xs: 12, sm: 6, md: 3 }} key={pokemon.name}>
 							<Link
 								href={`/pokemon/${pokemonId}`}
 								style={{ textDecoration: "none", color: "inherit" }}>
 								<Box sx={{ position: "relative", top: "40px" }}>
-									<img
-                                        id={`pokemon-${pokemonId}`}
+									<Image
+										id={`pokemon-${pokemonId}`}
 										src={imageUrl}
 										alt={pokemon.name}
-										style={{ width: "100%" }}
-                                        onMouseEnter={handleOnMouseEnter(pokemonId)}
-                                        onMouseLeave={handleOnMouseLeave(pokemonId)}
+										width={200}
+										height={200}
+										onMouseEnter={handleOnMouseEnter(pokemonId)}
+										onMouseLeave={handleOnMouseLeave(pokemonId)}
+										style={{ width: "100%", height: "auto" }}
 									/>
 								</Box>
 								<Card
 									sx={{
 										boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
 										borderRadius: "10px",
-                                        backgroundColor: "#f5f5f5",
+										backgroundColor: "#f5f5f5",
 									}}>
 									<CardContent>
 										<Typography variant="h6" align="center">

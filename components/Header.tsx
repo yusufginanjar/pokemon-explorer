@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Link from "next/link";
+import Image from "next/image";
 
 const ButtonAppBar: React.FC = () => {
 	return (
@@ -20,7 +21,7 @@ const ButtonAppBar: React.FC = () => {
 								color="inherit"
 								aria-label="menu"
 								sx={{ mr: 2 }}>
-								<img src="/pokeball.png" alt="Pokemon" width="40" height="40" />
+								<Image src="/pokeball.png" alt="Pokemon" width="40" height="40" />
 							</IconButton>
 							<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 								Home

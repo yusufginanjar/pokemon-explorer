@@ -1,9 +1,7 @@
 import React from "react";
 import { Box, BoxProps } from "@mui/material";
 
-interface CustomBoxProps extends BoxProps {}
-
-export const CustomBox: React.FC<CustomBoxProps> = ({ children, ...props }) => {
+export const CustomBox: React.FC<BoxProps> = ({ children, ...props }) => {
   return (
     <Box
       sx={{

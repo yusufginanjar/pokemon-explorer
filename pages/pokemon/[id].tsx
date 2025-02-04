@@ -36,6 +36,7 @@ const PokemonDetail = () => {
         setPokemon(data);
       } catch (err) {
         setError("Failed to fetch Pokémon details");
+        console.error(err);
         setTimeout(() => router.push("/"), 3000);
       } finally {
         setLoading(false);
@@ -43,7 +44,7 @@ const PokemonDetail = () => {
     };
 
     getPokemon();
-  }, [id]);
+  }, [id, router]);
 
   if (loading) return <CircularProgress style={{ display: "block", margin: "50vh auto" }} />;
   if (error) return <Typography color="error">{error}</Typography>;

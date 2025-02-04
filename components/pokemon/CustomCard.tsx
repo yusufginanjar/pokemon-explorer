@@ -1,9 +1,7 @@
 import React from "react";
 import { Card, CardProps } from "@mui/material";
 
-interface CustomCardProps extends CardProps {}
-
-export const CustomCard: React.FC<CustomCardProps> = ({ children, ...props }) => {
+export const CustomCard: React.FC<CardProps> = ({ children, ...props }) => {
   return (
     <Card
       sx={{
