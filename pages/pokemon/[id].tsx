@@ -14,8 +14,6 @@ import {
 	Button,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import styled from "@mui/material/styles/styled";
-import { Source } from "@mui/icons-material";
 
 // Interface for Pokémon details
 interface PokemonDetail {
@@ -45,21 +43,8 @@ interface PokemonDetail {
 	}[];
 }
 
-const CustomCard = styled(Card)(({ theme }) => ({
-	borderRadius: theme.spacing(1),
-	boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-	opacity: 0.9,
-}));
 
-const CustomBox = styled(Box)(({ theme }) => ({
-	border: "1px solid",
-	borderRadius: theme.spacing(1),
-	borderColor: "#e0e0e0",
-	backgroundColor: "#f5f5f5",
-	padding: theme.spacing(1),
-	textAlign: "center",
-}));
-
+  
 // Helper functions for unit conversion
 const convertToMeter = (decimeter: number) => decimeter / 10;
 const convertToKg = (hectogram: number) => hectogram / 10;
@@ -75,6 +60,32 @@ const onMouseEnter = (source: string) => {
 		image.src = source;
 	}
 };
+
+const CustomCard = ({ ...props }) => (
+	<Card
+	  sx={{
+		borderRadius: 1, // Sama dengan theme.spacing(1)
+		boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+		opacity: 0.9,
+	  }}
+	  {...props}
+	/>
+  );
+  
+  const CustomBox = ({ ...props }) => (
+	<Box
+	  sx={{
+		border: "1px solid",
+		borderRadius: 1,
+		borderColor: "#e0e0e0",
+		backgroundColor: "#f5f5f5",
+		padding: 1,
+		textAlign: "center",
+	  }}
+	  {...props}
+	/>
+  );
+
 
 // Component to display Pokémon image
 const PokemonImage = ({

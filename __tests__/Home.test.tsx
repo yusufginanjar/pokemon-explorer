@@ -81,7 +81,7 @@ describe("Home Component", () => {
         await waitFor(() => expect(screen.getByText(/bulbasaur/i)).toBeInTheDocument());
 
         const paginationButtons = screen.getAllByRole("button");
-        fireEvent.click(paginationButtons[2]); // Mengklik halaman kedua
+        fireEvent.click(paginationButtons[1]); // Mengklik halaman kedua
 
         expect(axios.get).toHaveBeenCalledWith(
             expect.stringContaining("offset=20")
