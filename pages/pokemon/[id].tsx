@@ -11,6 +11,7 @@ import {
 	LinearProgress,
 	List,
 	ListItem,
+	Button,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import styled from "@mui/material/styles/styled";
@@ -82,31 +83,43 @@ const PokemonImage = ({
 	name: string;
 }) => (
 	<CustomCard sx={{ height: "100%" }}>
-		<img
-			id="main-image"
-			src={image}
-			alt={name}
-			style={{ width: "100%", height: "auto" }}
-		/>
-		<Box display="flex" justifyContent="space-between" sx={{ mt: "-100px" }}>
+		{image ? (
 			<img
+				id="main-image"
 				src={image}
 				alt={name}
-				style={{ width: "30%", height: "auto" }}
-				onMouseEnter={() => onMouseEnter(image)}
+				style={{ width: "100%", height: "auto" }}
 			/>
-			<img
-				src={imageBack}
-				alt={name}
-				style={{ width: "30%", height: "auto" }}
-				onMouseEnter={() => onMouseEnter(imageBack)}
-			/>
-			<img
-				src={imageShiny}
-				alt={name}
-				style={{ width: "30%", height: "auto" }}
-				onMouseEnter={() => onMouseEnter(imageShiny)}
-			/>
+		) : (
+			<Typography variant="h6" align="center" color="error">
+				No image available
+			</Typography>
+		)}
+		<Box display="flex" justifyContent="space-between" sx={{ mt: "-100px" }}>
+			{image && (
+				<img
+					src={image}
+					alt={name}
+					style={{ width: "30%", height: "auto" }}
+					onMouseEnter={() => onMouseEnter(image)}
+				/>
+			)}
+			{imageBack && (
+				<img
+					src={imageBack}
+					alt={name}
+					style={{ width: "30%", height: "auto" }}
+					onMouseEnter={() => onMouseEnter(imageBack)}
+				/>
+			)}
+			{imageShiny && (
+				<img
+					src={imageShiny}
+					alt={name}
+					style={{ width: "30%", height: "auto" }}
+					onMouseEnter={() => onMouseEnter(imageShiny)}
+				/>
+			)}
 		</Box>
 	</CustomCard>
 );
@@ -118,12 +131,14 @@ const PokemonAbilities = ({
 	abilities: PokemonDetail["abilities"];
 }) => (
 	<Box display="flex" flexDirection="column">
-		<Typography variant="h6" gutterBottom>
+		<Typography variant="h6" gutterBottom color="primary">
 			Abilities
 		</Typography>
 		<List dense>
 			{abilities.map((ability, index) => (
-				<ListItem key={`ability-${index}`}>{ability.ability.name}</ListItem>
+				<ListItem key={`ability-${index}`}>
+					&#8226; {ability.ability.name}
+				</ListItem>
 			))}
 		</List>
 	</Box>
@@ -132,12 +147,12 @@ const PokemonAbilities = ({
 // Component to display Pokémon types
 const PokemonTypes = ({ types }: { types: PokemonDetail["types"] }) => (
 	<Box display="flex" flexDirection="column">
-		<Typography variant="h6" gutterBottom>
+		<Typography variant="h6" gutterBottom color="primary">
 			Types
 		</Typography>
 		<List dense>
 			{types.map((type, index) => (
-				<ListItem key={`type-${index}`}>{type.type.name}</ListItem>
+				<ListItem key={`type-${index}`}>&#8226; {type.type.name}</ListItem>
 			))}
 		</List>
 	</Box>
@@ -152,14 +167,14 @@ const PokemonPhysicalDetails = ({
 	weight: number;
 }) => (
 	<Box>
-		<Typography variant="h6" gutterBottom align="center">
+		<Typography variant="h6" gutterBottom align="center" color="primary">
 			Height
 		</Typography>
 		<CustomBox>
 			<Typography>{convertToMeter(height)} m</Typography>
 		</CustomBox>
 		<Box sx={{ my: 2 }} />
-		<Typography variant="h6" gutterBottom align="center">
+		<Typography variant="h6" gutterBottom align="center" color="primary">
 			Weight
 		</Typography>
 		<CustomBox>
@@ -171,7 +186,7 @@ const PokemonPhysicalDetails = ({
 // Component to display Pokémon stats
 const PokemonStats = ({ stats }: { stats: PokemonDetail["stats"] }) => (
 	<Box display="flex" flexDirection="column">
-		<Typography variant="h6" gutterBottom align="center">
+		<Typography variant="h6" gutterBottom align="center" color="primary">
 			Stats
 		</Typography>
 		{stats.map((stat, index) => (
@@ -208,6 +223,7 @@ const PokemonDetail = () => {
 				setPokemon(res.data);
 			} catch (err) {
 				setError("Failed to fetch Pokémon details");
+				setTimeout(() => router.push("/"), 3000);
 			} finally {
 				setLoading(false);
 			}
@@ -246,7 +262,15 @@ const PokemonDetail = () => {
 									variant="h4"
 									gutterBottom
 									align="center"
-									className="font-pokemon-hollow">
+									className="font-pokemon-hollow"
+									color="warning">
+									Pokémon Details #{id}
+								</Typography>
+								<Typography
+									variant="h4"
+									gutterBottom
+									align="center"
+									color="primary">
 									{pokemon.name.toUpperCase()}
 								</Typography>
 								<Grid container spacing={2} sx={{ mt: 4 }}>
@@ -260,6 +284,7 @@ const PokemonDetail = () => {
 											height={pokemon.height}
 											weight={pokemon.weight}
 										/>
+										<Box sx={{ my: 2 }} />
 									</Grid>
 								</Grid>
 							</CardContent>
@@ -271,6 +296,33 @@ const PokemonDetail = () => {
 						<CustomCard>
 							<CardContent>
 								<PokemonStats stats={pokemon.stats} />
+							</CardContent>
+						</CustomCard>
+					</Grid>
+					{/* Pokémon Next and Prev */}
+					<Grid size={12}>
+						<CustomCard>
+							<CardContent>
+								<Box display="flex" justifyContent="space-between">
+									<Button
+										variant="contained"
+										color="primary"
+										onClick={() => router.push(`/pokemon/${Number(id) - 1}`)}
+										disabled={Number(id) === 1}>
+										<Typography variant="h6" align="center" color="white">
+											Prev
+										</Typography>
+									</Button>
+									<Button
+										variant="contained"
+										color="primary"
+										onClick={() => router.push(`/pokemon/${Number(id) + 1}`)}
+										disabled={Number(id) === 1304}>
+										<Typography variant="h6" align="center" color="white">
+											Next
+										</Typography>
+									</Button>
+								</Box>
 							</CardContent>
 						</CustomCard>
 					</Grid>

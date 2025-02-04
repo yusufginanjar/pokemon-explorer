@@ -22,6 +22,7 @@ const Home: React.FC = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [page, setPage] = useState<number>(1);
+	const [totalPages, setTotalPages] = useState<number>(0);
 	const [search, setSearch] = useState<string>("");
 
 	useEffect(() => {
@@ -31,6 +32,7 @@ const Home: React.FC = () => {
 					`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${(page - 1) * 20}`
 				);
 				setPokemons(res.data.results);
+				setTotalPages(Math.ceil(res.data.count / 20));
 			} catch (err) {
 				setError("Failed to fetch data");
 			} finally {
@@ -59,12 +61,12 @@ const Home: React.FC = () => {
 		pokemon.name.toLowerCase().includes(search.toLowerCase())
 	);
 
-    const handleOnMouseEnter = ( pokemonId : number ) => (event: React.MouseEvent<HTMLImageElement>) => {
+    const handleOnMouseEnter = ( pokemonId : string ) => (event: React.MouseEvent<HTMLImageElement>) => {
         const target = event.target as HTMLImageElement;
         target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemonId}.png`;
     }
 
-    const handleOnMouseLeave = ( pokemonId : number ) => (event: React.MouseEvent<HTMLImageElement>) => {
+    const handleOnMouseLeave = ( pokemonId : string ) => (event: React.MouseEvent<HTMLImageElement>) => {
         const target = event.target as HTMLImageElement;
         target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
     }
@@ -87,7 +89,7 @@ const Home: React.FC = () => {
 			</Grid>
 			<Grid container spacing={3}>
 				{filteredPokemons.map((pokemon, index) => {
-					const pokemonId = (page - 1) * 20 + index + 1;
+					const pokemonId = pokemon.url.split("/").slice(-2)[0];
 					let imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
 					return (
 						<Grid size={{ xs: 12, sm: 6, md: 3 }} key={pokemon.name}>
@@ -122,10 +124,11 @@ const Home: React.FC = () => {
 				})}
 			</Grid>
 			<Pagination
-				count={10}
+				count={totalPages}
 				page={page}
 				onChange={handlePageChange}
-				style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
+				variant="outlined"
+				style={{ marginTop: "50px", display: "flex", justifyContent: "center" }}
 			/>
 		</Container>
 	);
